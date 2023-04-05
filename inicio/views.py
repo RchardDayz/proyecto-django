@@ -5,7 +5,7 @@ from inicio.models import Animal
 from django.shortcuts import render
 
 def mi_vista(request):
-    return HttpResponse('<h1>Mi primera Vista</h1>')
+    return render(request, r'inicio/index.html')
 
 '''Version con http response'''
 # def mostrar_fecha(request):
