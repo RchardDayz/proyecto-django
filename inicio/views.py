@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Animal
+from django.shortcuts import render
 
 def mi_vista(request):
     return HttpResponse('<h1>Mi primera Vista</h1>')
@@ -41,7 +42,7 @@ def mostrar_fecha(request):
     dt = datetime.now()
     dt_formateado = dt.strftime("%A %d %B %Y %I:%M")
     
-    template = loader.get_template(r'mostrar_fecha.html')
+    template = loader.get_template(r'inicio/mostrar_fecha.html')
     template_renderizado = template.render({'fecha': dt_formateado})
     return HttpResponse(template_renderizado)
     
@@ -54,7 +55,7 @@ def prueba_template(request):
         'años':  [1995, 2004, 2014, 2017, 2021, 2022]
     }
     
-    template = loader.get_template(r'prueba_template.html')
+    template = loader.get_template(r'inicio/prueba_template.html')
     template_renderizado = template.render(datos)
     return HttpResponse(template_renderizado)
 
@@ -65,6 +66,22 @@ def crear_animal(request):
     print(animal.edad)
     animal.save()
     datos={'animal': animal}
-    template = loader.get_template(r'crear_animal.html')
+    template = loader.get_template(r'inicio/crear_animal.html')
     template_renderizado = template.render(datos)
     return HttpResponse(template_renderizado)
+
+#===================================================================
+'''Esta es una nueva forma de hacer una nueva vista
+Para hacer esta vista es importante hacer la siguiente importacion
+
+from django.shortcuts import render
+
+'''
+def prueba_render(request):
+    datos = {'nombre': 'ricardo'}
+        
+    '''Por convencion siempre se tiene que poner como primer 
+    argumento request, despues la ruta del template y despues
+    el dato que va a jalar'''
+    
+    return render(request, r'inicio/prueba_render.html', datos)
