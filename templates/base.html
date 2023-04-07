@@ -24,13 +24,15 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 {% comment %} <a class="navbar-brand" href="#!">Start Bootstrap</a> {% endcomment %}
-                <a class="navbar-brand" href="inicio">Inicio</a>
-                <a class="navbar-brand" href="mostrar-fecha">Mostra Fecha</a>
-                <a class="navbar-brand" href="saludar">Saludar</a>
-                <a class="navbar-brand" href="mi-primer-plantilla">Mi Primer Template</a>
-                <a class="navbar-brand" href="prueba-template">Prueba Templeate</a>
-                <a class="navbar-brand" href="crear-animal">Crear Animal</a>
-                <a class="navbar-brand" href="prueba-render">Prueba Render</a>
+                <a class="navbar-brand" href="inicio:inicio">Inicio</a>
+                <a class="navbar-brand" href="inicio:mostrar_fecha">Mostra Fecha</a>
+                <a class="navbar-brand" href="inicio:saludar">Saludar</a>
+                <a class="navbar-brand" href="inicio:mi_primer_plantilla">Mi Primer Template</a>
+                <a class="navbar-brand" href="inicio:prueba_template">Prueba Templeate</a>
+                <a class="navbar-brand" href="inicio:crear_animal">Crear Animal</a>
+                <a class="navbar-brand" href="inicio:prueba_render">Prueba Render</a>
+                <a class="navbar-brand" href="inicio:lista_animales">Animales</a>
+
                 {% comment %} <a class="btn btn-primary" href="#signup">Sign Up</a> {% endcomment %}
             </div>
         </nav>
@@ -49,6 +51,8 @@
                 </div>
             </div>
         </header>
+        {% block contenido %}
+        {% endblock contenido %}      
         <!-- Footer-->
         <footer class="footer bg-light">
             <div class="container">

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block tittle_head %}
+<title>Crear Animal</title>
+{% endblock tittle_head %}
+
+{% block h1_header %}
+<h1>Crear Animal</h1>
+{% endblock h1_header %}
+
+
+{% block contenido %}
+<form action={% url 'inicio:crear_animal' %} method="POST">
+    {% csrf_token %}
+    <p>
+        Ingrese nombre:
+        <input type="text" name="nombre" placeholder="Spike">
+    </p>
+    <p>
+        Ingrese Edad:
+        <input type="number" name="edad" placeholder="15">
+    </p>
+    <button>Crear</button>
+</form>
+{% endblock contenido %}
+
+

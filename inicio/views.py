@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Animal
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from inicio.forms import CreacionAnimalFormulario, BuscarAnimal
 
 def mi_vista(request):
     return render(request, r'inicio/index.html')
@@ -60,15 +61,50 @@ def prueba_template(request):
     return HttpResponse(template_renderizado)
 
 #===================================================================
+#Ejemplo 1
+# def crear_animal(request):
+#     animal = Animal(nombre= 'Toncha 2', edad= 3)
+#     print(animal.nombre)
+#     print(animal.edad)
+#     animal.save()
+#     datos={'animal': animal}
+#     template = loader.get_template(r'inicio/crear_animal.html')
+#     template_renderizado = template.render(datos)
+#     return HttpResponse(template_renderizado)
+
+#Ejemplo 2
+# def crear_animal(request):
+#     if request.method == "POST":
+#         animal = Animal(nombre= request.POST['nombre'], edad= request.POST['edad'])
+#         animal.save()
+#     return render(request, 'inicio/crear_animal_ej2.html')
+
+#Ejemplo 3
 def crear_animal(request):
-    animal = Animal(nombre= 'Toncha 2', edad= 3)
-    print(animal.nombre)
-    print(animal.edad)
-    animal.save()
-    datos={'animal': animal}
-    template = loader.get_template(r'inicio/crear_animal.html')
-    template_renderizado = template.render(datos)
-    return HttpResponse(template_renderizado)
+    if request.method == "POST":
+        formulario = CreacionAnimalFormulario(request.POST)
+        
+        if formulario.is_valid():
+            datos_correctos = formulario.cleaned_data
+            animal = Animal(nombre= datos_correctos['nombre'], edad= datos_correctos['edad'])
+            animal.save()
+            
+            return redirect('inicio:lista_animales')
+            
+    formulario = CreacionAnimalFormulario()
+    return render(request, 'inicio/crear_animal_ej3.html', {'formulario': formulario})
+#===================================================================
+
+def lista_animales(request):
+    nombre_a_buscar = request.GET.get('nombre', None)
+    
+    if nombre_a_buscar:
+        animales = Animal.objects.filter(nombre__icontains=nombre_a_buscar)
+    else:    
+        animales = Animal.objects.all()
+    formulario_busqueda = BuscarAnimal()
+    return render(request, 'inicio/lista_animales.html', {'animales': animales, 'formulario': formulario_busqueda})
+    
 
 #===================================================================
 '''Esta es una nueva forma de hacer una nueva vista
